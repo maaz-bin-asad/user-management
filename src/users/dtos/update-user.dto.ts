@@ -1,31 +1,26 @@
 import {
-  IsEmail,
   IsEnum,
   IsNotEmpty,
+  IsOptional,
   IsPhoneNumber,
   MinLength,
 } from 'class-validator';
 import { UserTypeEnum } from '../enums/user-type.enum';
 
-export class CreateUserDto {
+export class UpdateUserDto {
   @IsNotEmpty()
   @MinLength(3)
+  @IsOptional()
   name: string;
 
   @IsNotEmpty()
-  @MinLength(5)
-  password: string;
-
-  @IsNotEmpty()
   @IsPhoneNumber('IN')
+  @IsOptional()
   phone_number: string;
 
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  @IsNotEmpty()
   @MinLength(5)
+  @IsOptional()
   address: string;
 
   @IsNotEmpty()
