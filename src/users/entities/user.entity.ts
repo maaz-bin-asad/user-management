@@ -40,4 +40,10 @@ export class User {
     default: '',
   })
   password: string;
+
+  @Column({
+    nullable: false,
+    default: '',
+  })
+  user_type: string;
 }
