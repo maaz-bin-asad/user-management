@@ -57,7 +57,15 @@ export class UserService {
   }
 
   public async updateUser(email: string, updateUserDto: UpdateUserDto) {
+    const doesUserExists = await this.checkUserAlreadyExists(email);
+    if (doesUserExists) {
+      throw new BadRequestException('Given user does not exist');
+    }
     return await this.userRepository.update({ email }, updateUserDto);
+  }
+
+  public async deleteUser(email: string, _accessToken: string) {
+    return await this.userRepository.delete({ email });
   }
   public async checkUserAlreadyExists(email) {
     const user = await this.userRepository.findOne({

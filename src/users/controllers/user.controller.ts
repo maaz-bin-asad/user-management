@@ -8,6 +8,7 @@ import {
   ValidationPipe,
   Request,
   BadRequestException,
+  Headers,
 } from '@nestjs/common';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserService } from '../services/user.service';
@@ -51,5 +52,12 @@ export class UserController {
   @UsePipes(ValidationPipe)
   update(@Request() req, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.updateUser(req.user.profile.email, updateUserDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('delete')
+  @UsePipes(ValidationPipe)
+  delete(@Headers('authorization') accessToken: string, @Request() req) {
+    return this.userService.deleteUser(req.user.profile.email, accessToken);
   }
 }
