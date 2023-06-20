@@ -23,7 +23,13 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('get')
-  findUser(@Request() req): any {
+  async findUser(@Request() req): Promise<any> {
+    const doesUserExists = await this.userService.checkUserAlreadyExists(
+      req.user.profile.email,
+    );
+    if (!doesUserExists) {
+      throw new BadRequestException('Given user does not exist');
+    }
     if (
       req.user.profile.user_type === UserTypeEnum.ADMIN ||
       req.user.profile.user_type === UserTypeEnum.SUPER_ADMIN

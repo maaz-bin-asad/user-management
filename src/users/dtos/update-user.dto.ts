@@ -1,11 +1,9 @@
 import {
-  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsPhoneNumber,
   MinLength,
 } from 'class-validator';
-import { UserTypeEnum } from '../enums/user-type.enum';
 
 export class UpdateUserDto {
   @IsNotEmpty()
@@ -22,9 +20,4 @@ export class UpdateUserDto {
   @MinLength(5)
   @IsOptional()
   address: string;
-
-  @IsNotEmpty()
-  @MinLength(5)
-  @IsEnum(UserTypeEnum)
-  user_type: string;
 }
